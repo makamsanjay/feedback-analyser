@@ -2,13 +2,19 @@ require('dotenv').config();  // ✅ Load .env FIRST
 
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-// ✅ Allow all origins for dev
-app.use(cors());
+// ✅ Manual CORS headers for development
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS'); // ✅ added OPTIONS
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
+
 app.use(express.json());
 
 // ✅ MongoDB Connection

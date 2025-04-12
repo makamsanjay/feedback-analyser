@@ -6,7 +6,7 @@ const User = require('../models/user.js');
 router.post('/', async (req, res) => {
   const { formId, userEmail } = req.body;
   const already = await Response.findOne({ formId, userEmail });
-  if (already) return res.status(400).json({ msg: 'Already submitted' });
+  if (already) return res.status(409).json({ msg: 'Already submitted' });
 
   const response = new Response({ formId, userEmail });
   await response.save();
